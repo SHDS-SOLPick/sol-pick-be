@@ -1,4 +1,4 @@
-# SOL SOL한 레시피
+# SOLPick
 
 ## 디렉토리 구조 (25/03/03 update)
 
