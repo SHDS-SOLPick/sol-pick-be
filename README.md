@@ -60,7 +60,7 @@ solpick-be/
 │   │   │           ├── api/                       # 연동 API
 │   │   │           │   ├── client/
 │   │   │           │   └── dto/
-│   │   │           └── common/                    # 공통 기능
+│   │   │           └── common/                    # 공통 기능 (+)
 │   │   │               ├── exception/
 │   │   │               ├── util/
 │   │   │               └── dto/
