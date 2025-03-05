@@ -1,6 +1,6 @@
 # SOLPick
 
-## 디렉토리 구조 (25/03/03 update)
+## 디렉토리 구조 (25/03/05 update)
 
 ```
 solpick-be/ 
@@ -15,6 +15,20 @@ solpick-be/
 │   │   │           │   ├── service/
 │   │   │           │   ├── dto/
 │   │   │           │   └── security/
+│   │   │           ├── member/                    # 회원 관리 (추가)
+│   │   │           │   ├── controller/
+│   │   │           │   ├── service/
+│   │   │           │   ├── repository/
+│   │   │           │   ├── entity/
+│   │   │           │   └── dto/
+│   │   │           ├── security/                  # 보안 관련 (추가)
+│   │   │           │   ├── config/                # 보안 설정
+│   │   │           │   ├── jwt/                   # JWT 관련
+│   │   │           │   │   ├── filter/
+│   │   │           │   │   ├── provider/
+│   │   │           │   │   └── dto/
+│   │   │           │   ├── handler/               # 인증 성공/실패 핸들러
+│   │   │           │   └── service/               # 사용자 인증 서비스
 │   │   │           ├── card/                      # 카드 관리
 │   │   │           │   ├── controller/
 │   │   │           │   ├── service/
@@ -68,5 +82,5 @@ solpick-be/
 │   └── test/                                      # 테스트 코드
 ├── build.gradle                                   # 의존성 관리
 ├── Dockerfile(+)                                     
-└── README.md                                      
+└── README.md                                    
 ```
