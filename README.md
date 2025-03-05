@@ -9,26 +9,25 @@ solpick-be/
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── solpick/
-│   │   │           ├── config/                    # 설정 클래스
-│   │   │           ├── auth/                      # 인증 관련
+│   │   │           ├── config/                    
+│   │   │           ├── auth/                      # 인증 
 │   │   │           │   ├── controller/
 │   │   │           │   ├── service/
 │   │   │           │   ├── dto/
-│   │   │           │   └── security/
-│   │   │           ├── member/                    # 회원 관리 (추가)
+│   │   │           │   └── security/              # 보안 
+│   │   │           │       ├── config/            # 설정
+│   │   │           │       ├── jwt/               # JWT 관련
+│   │   │           │       │   ├── filter/
+│   │   │           │       │   ├── provider/
+│   │   │           │       │   └── dto/
+│   │   │           │       ├── handler/           
+│   │   │           │       └── service/           
+│   │   │           ├── member/                    # 회원
 │   │   │           │   ├── controller/
 │   │   │           │   ├── service/
 │   │   │           │   ├── repository/
 │   │   │           │   ├── entity/
 │   │   │           │   └── dto/
-│   │   │           ├── security/                  # 보안 관련 (추가)
-│   │   │           │   ├── config/                # 보안 설정
-│   │   │           │   ├── jwt/                   # JWT 관련
-│   │   │           │   │   ├── filter/
-│   │   │           │   │   ├── provider/
-│   │   │           │   │   └── dto/
-│   │   │           │   ├── handler/               # 인증 성공/실패 핸들러
-│   │   │           │   └── service/               # 사용자 인증 서비스
 │   │   │           ├── card/                      # 카드 관리
 │   │   │           │   ├── controller/
 │   │   │           │   ├── service/
@@ -59,13 +58,7 @@ solpick-be/
 │   │   │           │   ├── repository/
 │   │   │           │   ├── entity/
 │   │   │           │   └── dto/
-│   │   │           ├── user/                      # 사용자/마이페이지
-│   │   │           │   ├── controller/
-│   │   │           │   ├── service/
-│   │   │           │   ├── repository/
-│   │   │           │   ├── entity/
-│   │   │           │   └── dto/
-│   │   │           ├── cooking/                   # 함께요리 기능 (+)
+│   │   │           ├── cooking/                   # 쿠킹 (+)
 │   │   │           │   ├── controller/
 │   │   │           │   ├── service/
 │   │   │           │   ├── repository/
@@ -82,5 +75,5 @@ solpick-be/
 │   └── test/                                      # 테스트 코드
 ├── build.gradle                                   # 의존성 관리
 ├── Dockerfile(+)                                     
-└── README.md                                    
+└── README.md                                 
 ```
