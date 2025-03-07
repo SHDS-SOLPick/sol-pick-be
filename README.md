@@ -1,13 +1,13 @@
 # SOLPick
 
-## 디렉토리 구조 (25/03/05 update)
+## 디렉토리 구조 (25/03/07 update)
 
 ```
-solpick-be/ 
+sol-pick-be/ 
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── com/
+│   │   │   └── com/example/
 │   │   │       └── solpick/
 │   │   │           ├── config/                    
 │   │   │           ├── auth/                      # 인증 
