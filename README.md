@@ -7,7 +7,7 @@ sol-pick-be/
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── com/example/
+│   │   │   └── kr/co/
 │   │   │       └── solpick/
 │   │   │           ├── config/                    
 │   │   │           ├── auth/                      # 인증 
