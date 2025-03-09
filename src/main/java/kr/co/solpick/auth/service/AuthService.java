@@ -3,14 +3,18 @@ package kr.co.solpick.auth.service;
 import kr.co.solpick.auth.dto.AuthRequestDTO;
 import kr.co.solpick.auth.dto.AuthResponseDTO;
 //import kr.co.solpick.auth.security.JwtTokenProvider;
+import kr.co.solpick.auth.security.JWTUtil;
 import kr.co.solpick.external.recipick.client.RecipickAuthClient;
 import kr.co.solpick.external.recipick.dto.RecipickMemberResponseDTO;
 import kr.co.solpick.member.dto.MemberDTO;
 import kr.co.solpick.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -19,6 +23,7 @@ public class AuthService {
 
     private final RecipickAuthClient recipickAuthClient;
     private final MemberService memberService;
+    private final JWTUtil jwtUtil;
 //    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
@@ -64,12 +69,19 @@ public class AuthService {
         // 6. JWT 토큰 생성
 //        String token = jwtTokenProvider.createToken(memberInfo.getEmail(), memberInfo.getId());
 
-        String dummyToken = "dummy-token-" + memberInfo.getId();
+//        String dummyToken = "dummy-token-" + memberInfo.getId();
+
+
+
+
+        String token = jwtUtil.generationToken(
+                Map.of("email", memberInfo.getEmail(), "id", memberInfo.getId()), 1);
+
 
         // 7. 로그인 응답 생성
         return AuthResponseDTO.builder()
-//                .token(token)
-                .token(dummyToken)
+                .token(token)
+//                .token(dummyToken)
                 .memberId(memberInfo.getId())
                 .recipickUserId(memberInfo.getRecipickUserId())
                 .email(memberInfo.getEmail())
