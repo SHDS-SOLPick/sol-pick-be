@@ -32,19 +32,19 @@ public class Member {
     private String name;
 
 //    @Column(nullable = false)
-//    private String phone;
+    private String phone;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-//    @Column(name = "profile_image_url")
-//    private String profileImageUrl;
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     @Column(name = "last_login_at")
     private String lastLoginAt;
 
-//    @Column
-//    private String active;
+    @Column
+    private String active;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

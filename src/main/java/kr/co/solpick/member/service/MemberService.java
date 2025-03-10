@@ -74,6 +74,9 @@ public class MemberService {
                 .name(dto.getName())
                 .nickname(dto.getNickname())
                 .recipickUserId(dto.getRecipickUserId())
+                .phone("")  // 문자열로 직접 값 전달
+                .profileImageUrl(null)  // null도 직접 전달
+                .active("Y")
                 .build();
     }
 }
