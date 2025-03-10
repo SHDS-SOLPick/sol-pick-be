@@ -82,7 +82,7 @@ public class AuthService {
         return AuthResponseDTO.builder()
                 .token(token)
 //                .token(dummyToken)
-//                .memberId(memberInfo.getId())
+                .memberId(memberInfo.getId())
                 .recipickUserId(memberInfo.getRecipickUserId())
                 .email(memberInfo.getEmail())
                 .name(memberInfo.getName())

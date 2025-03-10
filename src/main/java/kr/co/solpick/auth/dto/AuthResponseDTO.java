@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthResponseDTO {
     private String token;
-    @JsonProperty("member_id")
     private Integer memberId;
     private Integer recipickUserId;
     private String email;
