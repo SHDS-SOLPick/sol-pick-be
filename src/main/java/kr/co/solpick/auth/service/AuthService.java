@@ -72,11 +72,8 @@ public class AuthService {
 //        String dummyToken = "dummy-token-" + memberInfo.getId();
 
 
-
-
         String token = jwtUtil.generationToken(
                 Map.of("email", memberInfo.getEmail(), "id", memberInfo.getId()), 1);
-
 
         // 7. 로그인 응답 생성
         return AuthResponseDTO.builder()
