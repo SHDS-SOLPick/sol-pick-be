@@ -32,7 +32,6 @@ public class RecipickOrderApiClient {
         try {
             log.info("레시픽 API 주문 내역 요청: memberId={}", memberId);
 
-            // 동적으로 URL 구성
             String url = baseUrl + "/api/order/history";
 
             HttpHeaders headers = new HttpHeaders();
