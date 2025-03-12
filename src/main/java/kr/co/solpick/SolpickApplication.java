@@ -2,6 +2,7 @@ package kr.co.solpick;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+<<<<<<< HEAD
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -12,3 +13,14 @@ public class SolPickApplication {
 		SpringApplication.run(SolPickApplication.class, args);
 	}
 }
+=======
+
+@SpringBootApplication
+public class SolpickApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SolpickApplication.class, args);
+    }
+
+}
+>>>>>>> develop
