@@ -40,3 +40,6 @@ out/
 application-secret.properties
 
 .DS_Store
+
+### Google Cloud Vision API ###
+/src/main/resources/google-credentials.json
