@@ -97,7 +97,12 @@ public class ExpirationNotificationService {
                 long daysLeft = ChronoUnit.DAYS.between(
                         LocalDateTime.now().toLocalDate(),
                         ingredient.getExpiryDate().toLocalDate());
-                message = ingredient.getName() + "의 유통기한이 " + daysLeft + "일 남았어요!";
+
+                if (daysLeft == 0) {
+                    message = ingredient.getName() + "의 유통기한이 오늘까지에요!";
+                } else {
+                    message = ingredient.getName() + "의 유통기한이 " + daysLeft + "일 남았어요!";
+                }
             }
         } else {
             // 여러 식재료 메시지 (최대 3개 이름 표시, 나머지는 숫자로 표시)
