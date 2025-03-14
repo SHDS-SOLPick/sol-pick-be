@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/login").permitAll() // 로그인은 인증 없이 접근 가능
                                 .requestMatchers("/solpick/refrigerator/**").permitAll() // 식재료 관련
                                 .requestMatchers("/solpick/noti/**").permitAll() // 알림 관련
+                                .requestMatchers("/solpick/api/points").permitAll()
 //                        .requestMatchers("/member/**").permitAll() //순서가 중요 아래 코드보다 위에 있어야함
                         .anyRequest().authenticated() // 다른 모든 요청은 인증 필요
                 );
