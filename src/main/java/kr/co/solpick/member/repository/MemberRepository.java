@@ -14,5 +14,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     Optional<Member> findByEmail(String email);
 
 //    // 레시픽 사용자 ID로 회원 조회
-//    Optional<Member> findByRecipickUserId(Integer recipickUserId);
+    Optional<Member> findByRecipickUserId(Integer recipickUserId);
 }
