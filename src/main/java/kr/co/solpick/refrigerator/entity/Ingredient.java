@@ -27,7 +27,8 @@ public class Ingredient {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "refrigerator_ing_img")
+    @Lob
+    @Column(name = "refrigerator_ing_img", columnDefinition = "LONGTEXT")
     private String image;
 
     @Column(name = "refrigerator_ing_name")
