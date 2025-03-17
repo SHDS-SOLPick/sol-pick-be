@@ -51,7 +51,6 @@ public class CardValidationService {
         Member member = memberOpt.get();
 
         // 2. 사용자의 카드 정보 조회 및 검증
-        // 참고: CardRepository의 메서드명도 함께 수정해야 합니다
         Optional<Card> cardOpt = cardRepository.findByUserIdAndCardNumberAndCardStatus(
                 member.getId(), cardNumber, "ACTIVE");
 
