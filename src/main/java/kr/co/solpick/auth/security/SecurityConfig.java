@@ -31,14 +31,16 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll() // 로그인은 인증 없이 접근 가능
-                                .requestMatchers("/api/solpick/refrigerator/**").authenticated() // 식재료 관련
-                                .requestMatchers("/api/solpick/noti/**").authenticated() // 알림 관련
+                                .requestMatchers("/solpick/refrigerator/**").permitAll() // 식재료 관련
+                                .requestMatchers("/solpick/noti/**").permitAll() // 알림 관련
                                 .requestMatchers("/solpick/api/points").permitAll()
                                 .requestMatchers("/solpick/api/points/update").permitAll()
                                 .requestMatchers("/solpick/api/payment/verify-card").permitAll()
                                 .requestMatchers("/solpick/api/card/**").permitAll()
                                 .requestMatchers("/solpick/api/card-design/**").permitAll()
                                 .requestMatchers("/solpick/api/card-design/card-info/**").permitAll()
+                                .requestMatchers("/solpick/api/game/**").permitAll()
+                                .requestMatchers("/solpick/api/game/recipe/**").permitAll()
 //                        .requestMatchers("/member/**").permitAll() //순서가 중요 아래 코드보다 위에 있어야함
                         .anyRequest().authenticated() // 다른 모든 요청은 인증 필요
                 );
