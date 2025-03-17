@@ -12,9 +12,8 @@ import java.util.Map;
 
 @Slf4j  // 이 부분 추가
 @RestController
-@RequestMapping("/api/card")
+@RequestMapping("/solpick/api/card")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000/"})
 public class CardController {
 
     private final CardService cardService;

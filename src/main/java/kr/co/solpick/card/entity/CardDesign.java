@@ -13,42 +13,27 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "card")
+@Table(name = "card_design")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Card {
+public class CardDesign {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "card_id")
-    private Integer id;
+    @Column(name = "design_id")
+    private Integer designId;
 
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Column(name = "card_number", nullable = false)
-    private String cardNumber;
+    @Column(name = "background_id", nullable = false)
+    private Integer backgroundId;
 
-    @Column(name = "cvc_number", nullable = false)
-    private String cvcNumber;
-
-    @Column(name = "card_type")
-    private String cardType;
-
-    @Column(name = "design_id")
-    private Integer designId;
-
-    @Column(name = "issue_date")
-    private LocalDate issueDate;
-
-    @Column(name = "expired_at")
-    private LocalDate expiredAt;
-
-    @Column(name = "card_status")
-    private String cardStatus;
+    @Column(name = "stickers_data", columnDefinition = "LONGTEXT")
+    private String stickersData;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -57,12 +42,6 @@ public class Card {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
 
 
 }
