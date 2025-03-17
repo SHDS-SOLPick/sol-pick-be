@@ -36,6 +36,9 @@ public class SecurityConfig {
                                 .requestMatchers("/solpick/api/points").permitAll()
                                 .requestMatchers("/solpick/api/points/update").permitAll()
                                 .requestMatchers("/solpick/api/payment/verify-card").permitAll()
+                                .requestMatchers("/solpick/api/card/**").permitAll()
+                                .requestMatchers("/solpick/api/card-design/**").permitAll()
+                                .requestMatchers("/solpick/api/card-design/card-info/**").permitAll()
 //                        .requestMatchers("/member/**").permitAll() //순서가 중요 아래 코드보다 위에 있어야함
                         .anyRequest().authenticated() // 다른 모든 요청은 인증 필요
                 );

@@ -15,8 +15,8 @@ public class CardResponseDTO {
     private Integer cardId;
     private Integer userId;
     private String cardNumber;
-    private LocalDateTime issueDate;
-    private LocalDate expiredAt;
+    private LocalDate issueDate;
+    private String expiredAt;
     private String lastName;
     private String firstName;
     private LocalDateTime createdAt;
