@@ -31,8 +31,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll() // 로그인은 인증 없이 접근 가능
-                                .requestMatchers("/solpick/refrigerator/**").permitAll() // 식재료 관련
-                                .requestMatchers("/solpick/noti/**").permitAll() // 알림 관련
+                                .requestMatchers("/api/solpick/refrigerator/**").authenticated() // 식재료 관련
+                                .requestMatchers("/api/solpick/noti/**").authenticated() // 알림 관련
                                 .requestMatchers("/solpick/api/points").permitAll()
                                 .requestMatchers("/solpick/api/points/update").permitAll()
                                 .requestMatchers("/solpick/api/payment/verify-card").permitAll()
