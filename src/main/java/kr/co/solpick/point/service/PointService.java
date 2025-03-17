@@ -3,16 +3,22 @@ package kr.co.solpick.point.service;
 import kr.co.solpick.card.repository.CardRepository;
 import kr.co.solpick.member.entity.Member;
 import kr.co.solpick.member.repository.MemberRepository;
+import kr.co.solpick.point.dto.PointHistoryResponseDTO;
+import kr.co.solpick.point.dto.PointSummaryResponseDTO;
 import kr.co.solpick.point.entity.Point;
 import kr.co.solpick.point.repository.PointRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.format.DateTimeFormatter;
 import kr.co.solpick.card.entity.Card;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -129,5 +135,72 @@ public class PointService {
         }
 
         return true;
+    }
+
+    /**
+     * 사용자 ID로 포인트 요약 정보 조회
+     */
+    @Transactional(readOnly = true)
+    public PointSummaryResponseDTO getPointSummaryByUserId(Integer userId) {
+        log.info("포인트 요약 정보 조회: userId={}", userId);
+
+        // 1. 현재 포인트 잔액 조회
+        Integer currentPoints = pointRepository.findLatestPointBalanceByUserId(userId).orElse(0);
+
+        // 2. 포인트 적립/사용 합계 조회
+        Integer totalEarned = pointRepository.findTotalEarnedPointsByUserId(userId);
+        Integer totalUsed = pointRepository.findTotalUsedPointsByUserId(userId);
+
+        // 3. 메시지 생성 (예시)
+        String message = "총 " + currentPoints + "포인트 있어요!";
+
+        return PointSummaryResponseDTO.builder()
+                .currentPoints(currentPoints)
+                .totalEarnedPoints(totalEarned)
+                .totalUsedPoints(totalUsed)
+                .message(message)
+                .build();
+    }
+
+    /**
+     * 사용자 ID로 포인트 이용 내역 조회
+     */
+    @Transactional(readOnly = true)
+    public List<PointHistoryResponseDTO> getPointHistoryByUserId(Integer userId) {
+        log.info("포인트 이용 내역 조회: userId={}", userId);
+
+        // 1. 포인트 내역 조회
+        List<Point> pointHistory = pointRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+
+        // 2. DTO로 변환
+        return convertToDTO(pointHistory);
+    }
+
+    /**
+     * Point 엔티티 목록을 PointHistoryResponseDTO 목록으로 변환
+     */
+    private List<PointHistoryResponseDTO> convertToDTO(List<Point> points) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M.dd");
+
+        return points.stream()
+                .map(point -> {
+                    String formattedDate = point.getCreatedAt().toLocalDate().format(formatter);
+
+                    // 내역 설명 처리
+                    String description = point.getDescription();
+
+                    // 유형 및 금액 처리
+                    String type = point.getPointType();
+                    Integer amount = Math.abs(point.getPointAmount());
+
+                    return PointHistoryResponseDTO.builder()
+                            .pointId(point.getId())
+                            .date(formattedDate)
+                            .description(description)
+                            .amount(amount)
+                            .type(type)
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 }
