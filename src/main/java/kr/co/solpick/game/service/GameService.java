@@ -71,7 +71,7 @@ public class GameService {
                             .level(1)
                             .currentExp(0)
                             .energy(100)
-                            .food(5)
+                            .food(10)
                             .ingredientsCount(0)
                             .build();
                     return gameStateRepository.save(newState);
@@ -134,7 +134,7 @@ public class GameService {
      * @return 발견 결과
      */
     @Transactional
-    public DiscoveryResultDTO discoverIngredient(Integer userId, Integer recipeId, String ingredientName) {
+    public DiscoveryResultDTO discoverIngredient(Integer userId, Integer recipeId, String ingredientName, Integer recipePoints) {
         // 식재료 조회
         DiscoveredIngredients ingredient = discoveredIngredientsRepository
                 .findByUserIdAndRecipeIdAndIngredientName(userId, recipeId, ingredientName)
@@ -152,8 +152,8 @@ public class GameService {
         gameState.setIngredientsCount(gameState.getIngredientsCount() + 1);
         gameStateRepository.save(gameState);
 
-        // 레시피 완성 여부 체크
-        boolean isRecipeCompleted = checkRecipeCompletion(userId, recipeId);
+        // 레시피 완성 여부 확인
+        boolean isRecipeCompleted = checkRecipeCompletion(userId, recipeId, recipePoints);
 
         return DiscoveryResultDTO.builder()
                 .isNewlyDiscovered(isNewlyDiscovered)
@@ -162,13 +162,17 @@ public class GameService {
                 .build();
     }
 
+
+
+
     /**
      * 레시피 완성 여부 체크
      * @param userId 유저 ID
      * @param recipeId 레시피 ID
+     * @param recipePoints 레시피 포인트
      * @return 완성 여부
      */
-    private boolean checkRecipeCompletion(Integer userId, Integer recipeId) {
+    private boolean checkRecipeCompletion(Integer userId, Integer recipeId, Integer clientPoints) {
         // 식재료 목록 조회
         List<DiscoveredIngredients> ingredients =
                 discoveredIngredientsRepository.findByUserIdAndRecipeId(userId, recipeId);
@@ -183,11 +187,14 @@ public class GameService {
                     .existsByUserIdAndRecipeId(userId, recipeId);
 
             if (!alreadyCompleted) {
+                // 클라이언트에서 전달받은 포인트 값 적용 (없으면 기본값 사용)
+                Integer recipePoints = (clientPoints != null) ? clientPoints : 5000;
+
                 // 완성된 레시피 저장
                 CompletedRecipe completedRecipe = CompletedRecipe.builder()
                         .userId(userId)
                         .recipeId(recipeId)
-                        .pointAmount(500) // 포인트 금액 설정 (필요에 따라 조정)
+                        .pointAmount(recipePoints) // 동적 포인트 적용
                         .build();
                 completedRecipeRepository.save(completedRecipe);
 
@@ -200,6 +207,7 @@ public class GameService {
 
         return false;
     }
+
 
     /**
      * 사료 추가

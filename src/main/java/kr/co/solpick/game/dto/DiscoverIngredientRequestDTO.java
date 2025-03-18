@@ -13,4 +13,5 @@ public class DiscoverIngredientRequestDTO {
     private Integer userId;
     private Integer recipeId;
     private String ingredientName;
+    private Integer recipePoints;
 }
