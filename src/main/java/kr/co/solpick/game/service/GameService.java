@@ -1,5 +1,7 @@
 package kr.co.solpick.game.service;
 
+import kr.co.solpick.card.entity.Card;
+import kr.co.solpick.card.repository.CardRepository;
 import kr.co.solpick.game.dto.*;
 import kr.co.solpick.game.entity.CompletedRecipe;
 import kr.co.solpick.game.entity.DiscoveredIngredients;
@@ -9,7 +11,9 @@ import kr.co.solpick.game.repository.CompletedRecipeRepository;
 import kr.co.solpick.game.repository.DiscoveredIngredientsRepository;
 import kr.co.solpick.game.repository.GameStateRepository;
 import kr.co.solpick.game.repository.GameUserRecipeRepository;
-//import kr.co.solpick.point.service.PointService; // 추후 구현
+import kr.co.solpick.member.repository.MemberRepository;
+import kr.co.solpick.point.repository.PointRepository;
+import kr.co.solpick.point.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +31,10 @@ public class GameService {
     private final GameStateRepository gameStateRepository;
     private final DiscoveredIngredientsRepository discoveredIngredientsRepository;
     private final CompletedRecipeRepository completedRecipeRepository;
-//    private final PointService pointService; // 포인트 서비스는 기존에 구현되어 있다고 가정
+    private final PointRepository pointRepository;
+    private final MemberRepository memberRepository;
+    private final CardRepository cardRepository;
+    private final PointService pointService;
 
     /**
      * 유저의 레시피 선택 저장
@@ -127,7 +134,7 @@ public class GameService {
     }
 
     /**
-     * 식재료 발견 처리
+     * 식재료 발견 처리 - 개선된 로직
      * @param userId 유저 ID
      * @param recipeId 레시피 ID
      * @param ingredientName 식재료 이름
@@ -135,7 +142,11 @@ public class GameService {
      */
     @Transactional
     public DiscoveryResultDTO discoverIngredient(Integer userId, Integer recipeId, String ingredientName, Integer recipePoints) {
-        // 식재료 조회
+        // 해당 레시피의 모든 식재료 조회
+        List<DiscoveredIngredients> allIngredients =
+                discoveredIngredientsRepository.findByUserIdAndRecipeId(userId, recipeId);
+
+        // 지정된 식재료 조회
         DiscoveredIngredients ingredient = discoveredIngredientsRepository
                 .findByUserIdAndRecipeIdAndIngredientName(userId, recipeId, ingredientName)
                 .orElseThrow(() -> new RuntimeException("Ingredient not found: " + ingredientName));
@@ -162,9 +173,6 @@ public class GameService {
                 .build();
     }
 
-
-
-
     /**
      * 레시피 완성 여부 체크
      * @param userId 유저 ID
@@ -190,16 +198,20 @@ public class GameService {
                 // 클라이언트에서 전달받은 포인트 값 적용 (없으면 기본값 사용)
                 Integer recipePoints = (clientPoints != null) ? clientPoints : 5000;
 
+                // 카드 정보 확인 - 카드가 없으면 완성 처리를 하지 않음
+                Card card = cardRepository.findByUserId(userId)
+                        .orElseThrow(() -> new RuntimeException("카드 정보가 없습니다. 게임 완료를 위해 카드가 필요합니다."));
+
                 // 완성된 레시피 저장
                 CompletedRecipe completedRecipe = CompletedRecipe.builder()
                         .userId(userId)
                         .recipeId(recipeId)
-                        .pointAmount(recipePoints) // 동적 포인트 적용
+                        .pointAmount(recipePoints)
                         .build();
                 completedRecipeRepository.save(completedRecipe);
 
-                // 포인트 적립
-//                pointService.addPoints(userId, 500, "레시피 완성 보상");
+                // 포인트 적립 - 카드 ID 전달 추가
+                pointService.addRecipeCompletionPoints(userId, card.getId(), recipePoints);
 
                 return true;
             }
