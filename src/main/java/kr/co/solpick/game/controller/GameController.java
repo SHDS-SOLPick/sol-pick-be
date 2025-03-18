@@ -90,7 +90,8 @@ public class GameController {
         DiscoveryResultDTO result = gameService.discoverIngredient(
                 request.getUserId(),
                 request.getRecipeId(),
-                request.getIngredientName());
+                request.getIngredientName(),
+                request.getRecipePoints());
 
         return ResponseEntity.ok(result);
     }
