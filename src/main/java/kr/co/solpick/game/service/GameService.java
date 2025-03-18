@@ -169,7 +169,7 @@ public class GameService {
      * 레시피 완성 여부 체크
      * @param userId 유저 ID
      * @param recipeId 레시피 ID
-     * @param recipePoints 레시피 포인트
+     * @param clientPoints 레시피 포인트
      * @return 완성 여부
      */
     private boolean checkRecipeCompletion(Integer userId, Integer recipeId, Integer clientPoints) {
@@ -237,6 +237,26 @@ public class GameService {
                         .discovered(ingredient.getDiscovered())
                         .count(ingredient.getCount())
                         .requiredQuantity(ingredient.getRequiredQuantity())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 유저의 완성된 레시피 목록 조회
+     * @param userId 유저 ID
+     * @return 완성된 레시피 목록
+     */
+    public List<CompletedRecipeDTO> getCompletedRecipes(Integer userId) {
+        List<CompletedRecipe> completedRecipes =
+                completedRecipeRepository.findByUserIdOrderByCompletionDateDesc(userId);
+
+        return completedRecipes.stream()
+                .map(recipe -> CompletedRecipeDTO.builder()
+                        .id(recipe.getId())
+                        .userId(recipe.getUserId())
+                        .recipeId(recipe.getRecipeId())
+                        .pointAmount(recipe.getPointAmount())
+                        .completionDate(recipe.getCompletionDate())
                         .build())
                 .collect(Collectors.toList());
     }
