@@ -1,16 +1,14 @@
 package kr.co.solpick.recipe.controller;
 
 import kr.co.solpick.external.recipick.dto.RecipickLikeResponseDTO;
+import kr.co.solpick.external.recipick.dto.RecipickStepResponseDTO;
 import kr.co.solpick.recipe.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -45,5 +43,21 @@ public class RecipeController {
 
         log.info("좋아요 레시피 목록 조회 성공: memberId={}, 건수={}", memberId, likedRecipes.size());
         return ResponseEntity.ok(likedRecipes);
+    }
+
+
+    @GetMapping("/{recipeId}/steps")
+    public ResponseEntity<List<RecipickStepResponseDTO>> getRecipeSteps(@PathVariable int recipeId) {
+        log.info("레시피 스텝 요청 수신: recipeId={}", recipeId);
+
+        List<RecipickStepResponseDTO> recipeSteps = recipeService.getRecipeSteps(recipeId);
+
+        if (recipeSteps.isEmpty()) {
+            log.info("레시피 스텝 없음: recipeId={}", recipeId);
+            return ResponseEntity.noContent().build();
+        }
+
+        log.info("레시피 스텝 조회 성공: recipeId={}, 건수={}", recipeId, recipeSteps.size());
+        return ResponseEntity.ok(recipeSteps);
     }
 }
