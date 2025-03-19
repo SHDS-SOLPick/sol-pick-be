@@ -203,4 +203,37 @@ public class PointService {
                 })
                 .collect(Collectors.toList());
     }
+
+    /**
+     * 레시피 완성 포인트 적립 메서드
+     * @param userId 쏠픽 사용자 ID
+     * @param cardId 신용카드 ID
+     * @param pointAmount 포인트액
+     */
+    @Transactional
+    public void addRecipeCompletionPoints(Integer userId, Integer cardId, Integer pointAmount) {
+        log.info("푸디캣 포인트 적립: userId={}, cardId={}, amount={}", userId, cardId, pointAmount);
+
+        // 현재 포인트 잔액 조회
+        Integer currentPointBalance = pointRepository.findLatestPointBalanceByUserId(userId)
+                .orElse(0);
+
+        // 카드 ID는 필수 값으로 설정
+
+        // 포인트 적립 내역 저장
+        Point pointEarning = Point.builder()
+                .userId(userId)
+                .cardId(cardId) // 카드 ID 필수
+                .pointAmount(pointAmount)
+                .pointBalance(currentPointBalance + pointAmount)
+                .pointType("EARN")
+                .description("푸디캣 포인트") // 고정 설명으로 변경
+                .transactionAmount(0)
+                .build();
+
+        pointRepository.save(pointEarning);
+
+        log.info("푸디캣 포인트 적립 완료: userId={}, cardId={}, amount={}, newBalance={}",
+                userId, cardId, pointAmount, pointEarning.getPointBalance());
+    }
 }
