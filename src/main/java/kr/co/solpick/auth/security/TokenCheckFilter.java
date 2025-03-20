@@ -41,6 +41,13 @@ public class TokenCheckFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        if (path.equals("/solpick/api/points") || path.equals("/solpick/api/payment/verify-card") ||
+        path.equals("/solpick/api/points/update")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
         log.info("Token Check Filter............");
         log.info("JWUtil: "+jwtUtil.toString());
 
