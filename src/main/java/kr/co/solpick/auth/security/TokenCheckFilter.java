@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.security.SignatureException;
+import java.util.List;
 import java.util.Map;
 import java.util.Collections;
 @Log4j2
@@ -21,7 +22,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {
     private static final List<String> EXCLUDED_PATHS = List.of(
             "/api/refrigerator/ingredients",
             "/api/refrigerator/recommend",
-            "/api/user-allergy",
+            "/api/user-allergy/",
             "/api/meal-plan"
     );
     public TokenCheckFilter (JWTUtil jwUtil) {
