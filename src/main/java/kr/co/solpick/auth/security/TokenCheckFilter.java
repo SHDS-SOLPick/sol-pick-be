@@ -21,7 +21,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {
     private JWTUtil jwtUtil;
     private static final List<String> EXCLUDED_PATHS = List.of(
             "/api/refrigerator/ingredients",
-            "/api/refrigerator/recommend",
+            "/api/refrigerator/recommend/",
             "/api/user-allergy/",
             "/api/meal-plan"
     );

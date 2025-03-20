@@ -35,7 +35,7 @@ public class OpenAiService {
                 "model", "gpt-4o",
                 "messages", List.of(Map.of("role", "user", "content", prompt)),
                 "temperature", 0.7,
-                "max_tokens", 1000,
+                "max_tokens", 5000,
                 "response_format", Map.of("type", "json_object")
         );
         System.out.println("🔹 OpenAI 요청 데이터: " + requestBody);
